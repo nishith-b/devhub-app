@@ -10,7 +10,11 @@ import {
   updateBlog,
 } from "../controllers/blog.js";
 
-const router = express();
+const router = express.Router();
+
+router.get("/test", (req, res) => {
+  res.json({ status: "router working!" });
+});
 
 router.post("/blog/new", isAuth, uploadFile, createBlog);
 router.post("/blog/:id", isAuth, uploadFile, updateBlog);

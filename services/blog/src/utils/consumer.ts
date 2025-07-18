@@ -9,13 +9,12 @@ interface CacheInvalidationMessage {
 
 export const startCacheConsumer = async () => {
   try {
-    const connection = await amqp.connect({
-      protocol: "amqp",
-      hostname: process.env.Rabbimq_Host,
-      port: 5672,
-      username: process.env.Rabbimq_Username,
-      password: process.env.Rabbimq_Password,
-    });
+    const RABBITMQ_URL = process.env.RABBITMQ_URL;
+
+    if (!RABBITMQ_URL) {
+      throw new Error("RABBITMQ_URL is not defined in environment variables.");
+    }
+    const connection = await amqp.connect(RABBITMQ_URL);
 
     const channel = await connection.createChannel();
 

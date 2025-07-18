@@ -1,16 +1,18 @@
 import amqp from "amqplib";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 let channel: amqp.Channel;
 
 export const connectRabbitMQ = async () => {
   try {
-    const connection = await amqp.connect({
-      protocol: "amqp",
-      hostname: process.env.Rabbimq_Host,
-      port: 5672,
-      username: process.env.Rabbimq_Username,
-      password: process.env.Rabbimq_Password,
-    });
+    const RABBITMQ_URL = process.env.RABBITMQ_URL;
+
+    if (!RABBITMQ_URL) {
+      throw new Error("RABBITMQ_URL is not defined in environment variables.");
+    }
+    const connection = await amqp.connect(RABBITMQ_URL);
 
     channel = await connection.createChannel();
 
