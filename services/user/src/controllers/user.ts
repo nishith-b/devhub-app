@@ -37,7 +37,7 @@ export const loginUser = TryCatch(async (req, res) => {
     });
   }
 
-  const token = jwt.sign({ user }, process.env.JWT_SEC as string, {
+  const token = jwt.sign({ user }, process.env.JWT_SECRET as string, {
     expiresIn: "5d",
   });
 
@@ -82,7 +82,7 @@ export const updateUser = TryCatch(async (req: AuthenticatedRequest, res) => {
     { new: true }
   );
 
-  const token = jwt.sign({ user }, process.env.JWT_SEC as string, {
+  const token = jwt.sign({ user }, process.env.JWT_SECRET as string, {
     expiresIn: "5d",
   });
 
@@ -124,7 +124,7 @@ export const updateProfilePic = TryCatch(
       { new: true }
     );
 
-    const token = jwt.sign({ user }, process.env.JWT_SEC as string, {
+    const token = jwt.sign({ user }, process.env.JWT_SECRET as string, {
       expiresIn: "5d",
     });
 
