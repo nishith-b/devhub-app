@@ -11,10 +11,11 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+export const author_service = process.env.NEXT_PUBLIC_AUTHOR_SERVICE;
+export const user_service = process.env.NEXT_PUBLIC_USER_SERVICE;
+export const blog_service = process.env.NEXT_PUBLIC_BLOG_SERVICE;
 
-export const user_service = "http://localhost:5000";
-export const author_service = "http://localhost:5001";
-export const blog_service = "http://localhost:5002";
+const clientId = process.env.NEXT_PUBLIC_GOOGLE_AUTH!;
 
 export const blogCategories = [
   "Techonlogy",
@@ -179,7 +180,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         getSavedBlogs,
       }}
     >
-      <GoogleOAuthProvider clientId="601955836331-3dti29qd75ui1u95f7kqrd0mt98dtm2t.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId={clientId}>
         {children}
         <Toaster />
       </GoogleOAuthProvider>
