@@ -1,7 +1,7 @@
 {
-  "name": "blog",
+  "name": "blog-service",
   "version": "1.0.0",
-  "description": "",
+  "description": "Blog microservice backend",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -15,12 +15,6 @@
   "license": "ISC",
   "dependencies": {
     "@neondatabase/serverless": "^1.0.0",
-    "@types/amqplib": "^0.10.7",
-    "@types/axios": "^0.14.4",
-    "@types/cors": "^2.8.17",
-    "@types/dotenv": "^8.2.3",
-    "@types/express": "^5.0.1",
-    "@types/jsonwebtoken": "^9.0.9",
     "amqplib": "^0.10.7",
     "axios": "^1.8.4",
     "concurrently": "^9.1.2",
@@ -28,7 +22,17 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "redis": "^4.7.0",
+    "redis": "^4.7.0"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.10.7",
+    "@types/axios": "^0.14.4",
+    "@types/cors": "^2.8.17",
+    "@types/dotenv": "^8.2.3",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^20.6.0",
+    "nodemon": "^3.1.10",
     "typescript": "^5.8.3"
   }
 }
