@@ -1,5 +1,5 @@
 import { AuthenticatedRequest } from "../middleware/isAuth.js";
-import { redisClient } from "../server.js";
+import { redisClient } from "../index.js";
 import { sql } from "../utils/db.js";
 import TryCatch from "../utils/TryCatch.js";
 import axios from "axios";

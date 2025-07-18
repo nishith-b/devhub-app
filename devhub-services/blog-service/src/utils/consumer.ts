@@ -1,5 +1,5 @@
 import amqp from "amqplib";
-import { redisClient } from "../server.js";
+import { redisClient } from "../index.js";
 import { sql } from "./db.js";
 
 interface CacheInvalidationMessage {
