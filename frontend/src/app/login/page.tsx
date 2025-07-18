@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,42 +14,63 @@ import { useAppData, user_service } from "@/context/AppContext";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 import { useGoogleLogin } from "@react-oauth/google";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Loading from "@/components/loading";
 
 const LoginPage = () => {
   const { isAuth, setIsAuth, loading, setLoading, setUser } = useAppData();
+  const router = useRouter();
 
-  if (isAuth) return redirect("/blogs");
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuth) {
+      router.push("/blogs");
+    }
+  }, [isAuth, router]);
 
-  const responseGoogle = async (authResult: any) => {
+  // Handle successful Google login
+  const responseGoogle = async (authResult: { code?: string }) => {
+    if (!authResult.code) {
+      toast.error("No authorization code received from Google");
+      return;
+    }
+
     setLoading(true);
     try {
       const result = await axios.post(`${user_service}/api/v1/login`, {
-        code: authResult["code"],
+        code: authResult.code,
       });
 
       Cookies.set("token", result.data.token, {
         expires: 5,
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
         path: "/",
       });
+
       toast.success(result.data.message);
       setIsAuth(true);
-      setLoading(false);
       setUser(result.data.user);
     } catch (error) {
-      console.log("error", error);
-      toast.error("Problem while login you");
+      console.error("Login error:", error);
+      toast.error("Problem while logging you in");
+    } finally {
       setLoading(false);
     }
   };
 
+  // Handle Google login errors
+  const handleGoogleLoginError = (error: unknown) => {
+    console.error("Google login error:", error);
+    toast.error("Google login failed");
+    setLoading(false);
+  };
+
   const googleLogin = useGoogleLogin({
     onSuccess: responseGoogle,
-    onError: responseGoogle,
-    flow: "implicit",
+    onError: handleGoogleLoginError,
+    flow: "auth-code",
   });
+
   return (
     <>
       {loading ? (
@@ -61,11 +83,11 @@ const LoginPage = () => {
               <CardDescription>Your go to blog app</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button onClick={googleLogin}>
-                Login with google{" "}
+              <Button onClick={() => googleLogin()}>
+                Login with Google{" "}
                 <img
                   src={"/google.png"}
-                  className="w-6 h-6"
+                  className="w-6 h-6 inline-block ml-2"
                   alt="google icon"
                 />
               </Button>

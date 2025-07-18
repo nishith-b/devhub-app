@@ -8,6 +8,7 @@ import { oauth2client } from "../utils/GoogleConfig.js";
 import axios from "axios";
 
 export const loginUser = TryCatch(async (req, res) => {
+  console.log("Inside Login")
   const { code } = req.body;
 
   if (!code) {

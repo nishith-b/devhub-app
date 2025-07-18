@@ -23,16 +23,18 @@ export const getAllBlogs = TryCatch(async (req, res) => {
       "%" + searchQuery + "%"
     } OR description ILIKE ${
       "%" + searchQuery + "%"
-    }) AND category = ${category} ORDER BY create_at DESC`;
+    }) AND category = ${category} ORDER BY created_at DESC`;
   } else if (searchQuery) {
     blogs = await sql`SELECT * FROM blogs WHERE (title ILIKE ${
       "%" + searchQuery + "%"
-    } OR description ILIKE ${"%" + searchQuery + "%"}) ORDER BY create_at DESC`;
+    } OR description ILIKE ${
+      "%" + searchQuery + "%"
+    }) ORDER BY created_at DESC`;
   } else if (category) {
     blogs =
-      await sql`SELECT * FROM blogs WHERE category=${category} ORDER BY create_at DESC`;
+      await sql`SELECT * FROM blogs WHERE category=${category} ORDER BY created_at DESC`;
   } else {
-    blogs = await sql`SELECT * FROM blogs ORDER BY create_at DESC`;
+    blogs = await sql`SELECT * FROM blogs ORDER BY created_at DESC`;
   }
 
   console.log("Serving from db");
@@ -90,7 +92,7 @@ export const getAllComments = TryCatch(async (req, res) => {
   const { id } = req.params;
 
   const comments =
-    await sql`SELECT * FROM comments WHERE blogid = ${id} ORDER BY create_at DESC`;
+    await sql`SELECT * FROM comments WHERE blogid = ${id} ORDER BY created_at DESC`;
 
   res.json(comments);
 });

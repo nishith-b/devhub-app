@@ -10,7 +10,6 @@ import React from "react";
 const Blogs = () => {
   const { toggleSidebar } = useSidebar();
   const { loading, blogLoading, blogs } = useAppData();
-  console.log(blogs);
   return (
     <div>
       {loading ? (
