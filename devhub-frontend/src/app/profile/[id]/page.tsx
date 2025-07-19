@@ -1,4 +1,5 @@
-"use client";
+export const runtime = "edge";
+
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAppData, User, user_service } from "@/context/AppContext";
